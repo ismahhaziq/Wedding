@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Edit Add-On'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Edit Makeup'])
 
         <style>
         .current-image-container {
@@ -43,30 +43,26 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Edit Add-On - {{ $service->title }}</h6>
+                    <h6>Edit Makeup - {{ $makeup->title }}</h6>
                 </div>
                 <div id="alert">
                     @include('components.alert')
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('services.update', $service->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('makeups.update', $makeup->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" name="title" value="{{ $service->title }}" required>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ $makeup->title }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Price (RM)</label>
-                            <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ $service->price }}" required>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ $makeup->price }}" required>
                         </div>
-
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status" name="status" required>
-                                <option value="1" {{ old('status', $service->status) == 1 ? 'selected' : '' }}>Available</option>
-                                <option value="0" {{ old('status', $service->status) == 0 ? 'selected' : '' }}>Unavailable</option>
-                            </select>
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3">{{ $makeup->description }}</textarea>
                         </div>
 
                          <!-- Add file input for image -->
@@ -74,22 +70,21 @@
                             <label for="image" class="form-label">Profile Image</label>
                             <input type="file" class="form-control" id="image" name="image" onchange="previewImage(this)">
                         </div>
-                        
 
                         <!-- Display current or selected image with border and max size -->
                         <div class="mb-3">
                             <label for="current_image" class="form-label">Current Image</label>
                             <div class="current-image-container">
-                                @if($service->image)
-                                    <img src="{{ asset('storage/' . $service->image) }}" class="img-fluid border rounded" id="preview" alt="Current Image">
+                                @if($makeup->image)
+                                    <img src="{{ asset('storage/' . $makeup->image) }}" class="img-fluid border rounded" id="preview" alt="Current Image">
                                 @else
                                     <p>No image available</p>
                                 @endif
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update Add-On</button>
-                        <a class="btn btn-primary" href="{{ route('services.index') }}"> Back</a>
+                        <button type="submit" class="btn btn-primary">Update Makeup</button>
+                        <a class="btn btn-primary" href="{{ route('makeups.index') }}"> Back</a>
                     </form>
                 </div>
             </div>

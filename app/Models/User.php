@@ -65,4 +65,11 @@ class User extends Authenticatable
         return $this->hasMany(Date::class, 'user_id');
     }
 
+    //berpunca di sini sahaja, silap sebab guna hasOne
+
+        public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
 }

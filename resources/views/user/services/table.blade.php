@@ -1,83 +1,74 @@
 @extends('layouts.userapp')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Service Management'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Add-On Management'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
-            <div class="d-flex justify-content-end mb-3">
-                <a href="{{ route('services.create') }}" class="btn btn-primary">Create Service</a>
-            </div>
-
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6>Services</h6>
+                        <h6>List of Add-On</h6>
                     </div>
+                </div>
+                <div id="alert">
+                    @include('components.alert')
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     @if(count($services) > 0)
-                        <div class="table-responsive p-0 overflow-auto">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($services as $service)
-                                        @if ($service->status == 1)
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-3 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $service->title }}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex px-3 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">RM{{ $service->price }}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex px-3 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <span class="badge bg-success">Available</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-end">
-                                                    <div class="d-flex px-3 py-1 align-items-center">
-                                                        <form method="POST" action="{{ route('invoices.add', $service->id) }}">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-success btn-sm mx-1">Add to Invoice</button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                            @foreach ($services as $service)
+                                @if ($service->status == 1)
+                                <div class="col mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-- Service Image -->
+                                             <div class="larger-image-container">
+                                                <img src="{{ asset('storage/' . $service->image) }}"  class="avatar me-3" alt="Current Image">
+                                            </div>
+
+                                            <!-- Service Title -->
+                                            <h5 class="text-black-bold p-2">{{ $service->title }}</h5>
+
+                                            <div class="card-text">
+                                                <!-- Service Price -->
+                                                <strong>Price:</strong> RM{{ $service->price }}<br><br>
+                                            </div>
+
+                                            <!-- Add to Invoice Button -->
+                                            <form action="{{ route('services.addToInvoice', $service->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm" title="Add to Invoice">
+                                                    Add to Invoice
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
                         </div>
                     @else
-                        <p class="text-center">No available services</p>
+                        <p class="text-center">No Makeup Added</p>
                     @endif
                 </div>
             </div>
         </div>
     </div>
+    
+    <style>
+.larger-image-container {
+    width: 100%;
+    height: 300px; /* Adjust the height as needed */
+    overflow: hidden;
+}
 
-    <script>
-        function confirmDelete(serviceId) {
-            if (confirm('Are you sure you want to delete this service?')) {
-                document.getElementById('deleteForm' + serviceId).submit();
-            }
-        }
-    </script>
+.larger-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+    
+
+    </style>
 @endsection

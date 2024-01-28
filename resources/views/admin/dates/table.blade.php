@@ -20,28 +20,42 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chosen Date</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody>                            
                                     @foreach ($disabledDates as $date)
+                                        @php
+                                         $count = 1;
+                                            // Find the user associated with the current date
+                                            $user = $users->firstWhere('date', $date);
+                                        @endphp
                                         <tr>
+                                            <td class="text-center">{{ $count++ }}</td>
+                                            <td>
+                                               
+                                                <div class="d-flex px-3 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">
+                                                                {{$user->user->name }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                
+                                            </td>
                                             <td>
                                                 <div class="d-flex px-3 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ \Carbon\Carbon::parse($date->date)->format('Y-m-d') }}</h6>
+                                                        <h6 class="mb-0 text-sm">
+                                                            @if (is_object($date))
+                                                                {{ \Carbon\Carbon::parse($date->date)->format('d-m-Y') }}
+                                                            @else
+                                                                {{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}
+                                                            @endif
+                                                        </h6>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                                    <a href="{{ route('admin.dates.edit', $date->id) }}" class="btn btn-primary btn-sm mx-1">Edit</a>
-                                                    <form id="deleteForm{{ $date->id }}" action="{{ route('admin.dates.destroy', $date->id) }}" method="POST" class="mx-1">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>

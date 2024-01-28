@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Route::currentRouteName() == 'profile' ? 'active' : '' }}" href="{{ route('dates.index') }}">
+                <a class="nav-link {{ Route::currentRouteName() == 'dates' ? 'active' : '' }}" href="{{ route('dates.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-calendar text-primary text-sm opacity-10"></i>
@@ -44,47 +44,39 @@
                     <span class="nav-link-text ms-1"> Event Date</span>
                 </a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'checklists.index' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('checklists.index') }}">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Checklist</span>
-                </a>
-            </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'todos.index' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('todos.index') }}">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-collection text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">To-Do</span>
-                </a>
-            </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'guests.index' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('guests.index') }}">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-circle-08 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Guest</span>
-                </a>
-            </li>
             <li class="nav-item {{ Route::currentRouteName() == 'caterings.index' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('caterings.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-circle-08 text-primary text-sm opacity-10"></i>
+                        <i class="fa fa-cutlery text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Catering</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'makeups' ? 'active' : '' }}" href="{{ route('makeups.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-calendar text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Make Up & Dress</span>
                 </a>
             </li> 
             <li class="nav-item {{ Route::currentRouteName() == 'services.index' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('services.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-circle-08 text-primary text-sm opacity-10"></i>
+                        <i class="fa fa-wrench text-primary text-sm opacity-10"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Service</span>
+                    <span class="nav-link-text ms-1">Add-On</span>
                 </a>
-            </li> 
-     
+            </li>
+            <li class="nav-item {{ Route::currentRouteName() == 'invoices.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('invoices.index') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-shopping-cart text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Invoices</span>
+                </a>
+            </li>        
         </ul>
     </div>
 </aside>

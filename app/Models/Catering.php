@@ -12,6 +12,11 @@ class Catering extends Model
     public $table = 'caterings';
 
     protected $fillable = [
-        'id', 'title', 'price', 'description', 'created_at', 'updated_at'
+        'id', 'title', 'price', 'user_id', 'description', 'created_at', 'updated_at'
     ];
+
+        public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -27,14 +27,6 @@
                 <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">Pages</h6>
             </li>
             <li class="nav-item">
-                        <a class="nav-link" href="#">                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link {{ str_contains(request()->url(), 'user-management') == true ? 'active' : '' }}" href="{{ route('users.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
@@ -42,18 +34,34 @@
                     <span class="nav-link-text ms-1">User Management</span>
                 </a>
             </li>
+            <li class="nav-item {{ Route::currentRouteName() == 'invoices.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('invoices.index') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-info-circle text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">User Invoice Detail</span>
+                </a>
+            </li>
             <li class="nav-item {{ Route::currentRouteName() == 'dates.index' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dates.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-circle-08 text-primary text-sm opacity-10"></i>
+                        <i class="fas fa-calendar text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Date Management</span>
+                </a>
+            </li>
+            <li class="nav-item {{ Route::currentRouteName() == 'makeups.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('makeups.index') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-paint-brush text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Make Up Management</span>
                 </a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'caterings.index' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('caterings.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-circle-08 text-primary text-sm opacity-10"></i>
+                        <i class="fa fa-cutlery text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Catering Management</span>
                 </a>
@@ -61,30 +69,9 @@
             <li class="nav-item {{ Route::currentRouteName() == 'services.index' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('services.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-circle-08 text-primary text-sm opacity-10"></i>
+                        <i class="fa fa-wrench text-primary text-sm opacity-10"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Service Management</span>
-                </a>
-            </li>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pages</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ str_contains(request()->url(), 'tables') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'tables']) }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Tables</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{  str_contains(request()->url(), 'billing') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'billing']) }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Billing</span>
+                    <span class="nav-link-text ms-1">Add-On Management</span>
                 </a>
             </li>
         </ul>

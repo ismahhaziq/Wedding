@@ -17,11 +17,15 @@
                     </div>
                 </div>
             </div>
+                            <div id="alert">
+                    @include('components.alert')
+                </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0 overflow-auto">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
@@ -33,9 +37,13 @@
                                         Action</th>
                                 </tr>
                             </thead>
+                             @php
+                                 $count = 1;
+                             @endphp
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
+                                        <td class="text-center">{{ $count++ }}</td>
                                         <td>
                                             <div class="d-flex px-3 py-1">
                                                 <div>

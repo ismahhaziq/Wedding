@@ -1,65 +1,82 @@
 @extends('layouts.userapp')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Guest Management'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Invoice'])
+
     <div class="row mt-4 mx-4">
         <div class="col-12">
-
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6>Guests</h6>
-                        <div class="mb-2">
-                            <a href="{{ route('guests.create') }}" class="btn btn-primary">Create Guest</a>
-                        </div>
+                        <h6>Invoice</h6>
                     </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                            <p>Event Date: {{ $eventDate}}</p>
+                    </div>
+                                                        <div id="alert">
+                    @include('components.alert')
                 </div>
+                    <!-- PLEASE DISPLAY THE EVENT DATE HERE-->
+                </div>
+                @php
+                    $count = 1;
+                    $total = 0; // Initialize the total variable
+                @endphp
                 <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0 overflow-auto">
-                        <table class="table align-items-center mb-0">
+                    @if(count($invoices) > 0)
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Number of Relatives</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                                    <th class="text-center">No</th>
+                                    <th>Title</th>
+                                    <th>Total Amount</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($guests as $guest)
+                                @foreach($invoices as $invoice)
                                     <tr>
-                                        <td class="text-center">
-                                            {{ $loop->iteration }}
+                                        <td class="text-center">{{ $count++ }}</td>
+                                        <td>{{ $invoice->title }}</td>
+                                        <td>
+                                            @if(in_array($invoice->title, ['PAKEJ RUBY', 'PAKEJ NILAM', 'PAKEJ DIAMOND']))
+                                                RM{{ $invoice->total_amount }}
+                                            @else
+                                                RM{{ $invoice->price }}
+                                            @endif
                                         </td>
                                         <td>
-                                            {{ $guest->name }}
-                                        </td>
-                                        <td>
-                                            {{ $guest->email }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $guest->relatives }}
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                                <a href="{{ route('guests.edit', $guest->id) }}" class="btn btn-primary btn-sm mx-1">Edit</a>
-                                                <form action="{{ route('guests.destroy', $guest->id) }}" method="post" class="mx-1">
+                                            <!-- Add action buttons here if needed -->
+                                            <form id="deleteForm{{ $invoice->id }}" action="{{ route('invoices.destroy', $invoice->id) }}" method="POST">
+                                                <div class=" px-3 py-1 align-items-center">
                                                     @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this guest?')">Delete</button>
-                                                </form>
-                                            </div>
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm ms-auto" >Delete</button>
+                                                </div>
+                                            </form>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No guests found</td>
-                                    </tr>
-                                @endforelse
+                                    @php
+                                        $total += $invoice->total_amount ?? $invoice->price; // Increment the total with the current item's total amount or price
+                                    @endphp
+                                @endforeach
                             </tbody>
                         </table>
-                    </div>
+
+                        <div class="text-right mt-3  d-flex justify-content-between">
+                            <strong>Total: RM{{ $total }}</strong>
+                             <button class="btn btn-success ml-2">PAY</button>
+                        </div>
+
+                        <div class="text-left mt-3">
+                            <!-- Add additional buttons or forms for further actions -->
+                          
+                        </div>
+
+                    @else
+                        <p class="text-center">No items added to the invoice</p>
+                    @endif
                 </div>
             </div>
         </div>

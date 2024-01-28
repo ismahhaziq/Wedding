@@ -36,7 +36,7 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone_number' => 'unique:users',
+            'phone_number' => 'required',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_type' => ['required'], // Assuming 'user_type' is a field in your form
             'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // Assuming 'image' is a file input in your form

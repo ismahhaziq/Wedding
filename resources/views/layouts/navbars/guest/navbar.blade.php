@@ -19,18 +19,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navigation">
                         <ul class="navbar-nav mx-auto">
-                            <li class="nav-item">
-                                <a class="nav-link me-2" href="{{ route('register') }}">
-                                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                                    Sign Up
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link me-2" href="{{ route('login') }}">
-                                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                                    Sign In
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
+                                        href="{{ route('welcome') }}">
+                                        <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
+                                        Home
+                                    </a>
+                                </li>
                         </ul>
                     </div>
                 </div>

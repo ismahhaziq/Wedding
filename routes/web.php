@@ -58,29 +58,17 @@ Route::resource('/caterings', App\Http\Controllers\CateringController::class);
 
 Route::resource('/dates', App\Http\Controllers\DateController::class);
 
+Route::resource('/makeups', App\Http\Controllers\MakeUpController::class);
+
+Route::resource('/invoices', App\Http\Controllers\InvoiceController::class);
+
+Route::post('/makeups/{makeup}/addToInvoice', [App\Http\Controllers\MakeupController::class, 'addToInvoice'])->name('makeups.addToInvoice');
+Route::post('/services/{service}/addToInvoice', [App\Http\Controllers\ServiceController::class, 'addToInvoice'])->name('services.addToInvoice');
+Route::post('/caterings/{catering}/addToInvoice', [App\Http\Controllers\CateringController::class, 'addToInvoice'])->name('caterings.addToInvoice');
+Route::post('/caterings/confirmInvoice', [App\Http\Controllers\CateringController::class, 'confirmInvoice'])->name('caterings.confirmInvoice');
+Route::get('/caterings/change', [App\Http\Controllers\CateringController::class, 'show'])->name('caterings.show');
+
 Route::put('/todos/{id}', [App\Http\Controllers\TodoController::class, 'update'])->name('todos.update');
 
-
-Route::post('/invoices/add/{service}', [InvoiceController::class, 'addToInvoice'])->name('invoices.add');
-
-
-
-Route::resource('/pages', App\Http\Controllers\PageController::class);
-
 Route::resource('/services', App\Http\Controllers\ServiceController::class);
-
-Route::get('/profile', [App\Http\Controllers\PageController::class, 'profile'])->name('profile-static');
-Route::get('/signup', [App\Http\Controllers\PageController::class, 'signup'])->name('sign-up-static');
-Route::get('/signin', [App\Http\Controllers\PageController::class, 'signin'])->name('sign-in-static');
-
-
-Route::get('virtual-reality', [App\Http\Controllers\PageController::class, 'vr'])->name('virtual-reality');
-Route::get('rtl', [App\Http\Controllers\PageController::class, 'rtl'])->name('rtl');
-
-Route::get('/pages/{page}', [App\Http\Controllers\PageController::class, 'index'])->name('page');
-
-
-Route::get('/sidenav', [App\Http\Controllers\UserProfileController::class, 'show'])->name('profile');
-Route::get('/update', [App\Http\Controllers\UserProfileController::class, 'update'])->name('profile.update');
-
 

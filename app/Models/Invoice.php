@@ -12,17 +12,24 @@ class Invoice extends Model
         public $table = 'invoices';
 
         protected $fillable = [
-        'id', 'service_id', 'catering_id', 'created_at', 'updated_at'
+        'id', 'title', 'price', 'user_id', 'total_guests', 'total_amount', 'selected_package_id', 'created_at', 'updated_at'
     ];
 
-    // Invoice.php
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-public function services() {
-    return $this->belongsToMany(Service::class);
-}
+    public function services() {
+        return $this->belongsToMany(Service::class);
+    }
 
-public function caterings() {
-    return $this->belongsToMany(Catering::class);
-}
+    public function caterings() {
+        return $this->belongsToMany(Catering::class);
+    }
 
+        public function date()
+    {
+        return $this->belongsTo(Date::class, 'date_id');
+    }
 }

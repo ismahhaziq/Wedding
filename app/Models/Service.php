@@ -12,10 +12,11 @@ class Service extends Model
     public $table = 'services';
 
         protected $fillable = [
-        'id', 'title', 'price', 'status', 'created_at', 'updated_at'
+        'id', 'title', 'price', 'status', 'image', 'user_id'. 'created_at', 'updated_at'
     ];
 
-    public function invoices() {
-    return $this->belongsToMany(Invoice::class)->withTimestamps();
-}
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

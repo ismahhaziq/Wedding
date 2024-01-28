@@ -25,7 +25,7 @@
                                     @method('PUT')
                                     <div class="mb-3">
                                         <label for="date" class="form-label">Chosen Date:</label>
-                                        <input type="text" class="form-control col-sm-3 datepicker" id="datepicker" name="date" min="{{ now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($userDate->date)->format('Y-m-d') }}" required @if($userDate->date === now()->format('Y-m-d')) disabled @endif>
+                                        <input type="text" class="form-control col-sm-3 datepicker" id="datepicker" name="date" min="{{ now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($userDate->date)->format('d-m-Y') }}" autocomplete="off" required @if($userDate->date === now()->format('Y-m-d')) disabled @endif>
                                     </div>
                                     <button type="submit" class="btn btn-sm btn-warning">Update Date</button>
 
@@ -68,9 +68,9 @@
 
         var picker = new Pikaday({
             field: document.getElementById('datepicker'),
-            format: 'YYYY-MM-DD',
+            format: 'DD-MM-YYYY',
             disableDayFn: function (date) {
-                return disabledDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1;
+                return disabledDates.indexOf(moment(date).format('DD-MM-YYYY')) !== -1;
             },
             minDate: new Date(today),
         });

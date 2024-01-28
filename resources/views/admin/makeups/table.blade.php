@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Add-On Management'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Makeup Management'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6>List of Add-On</h6>
+                        <h6>List of Makeups</h6>
                         <div class="mb-2">
-                            <!-- Add New Service Button -->
-                            <a href="{{ route('services.create') }}" class="btn btn-primary">Add New Add-On</a>
+                            <!-- Add New Makeup Button -->
+                            <a href="{{ route('makeups.create') }}" class="btn btn-primary">Add New Makeup</a>
                         </div>
                     </div>
                 </div>
@@ -18,33 +18,32 @@
                     @include('components.alert')
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    @if(count($services) > 0)
+                    @if(count($makeups) > 0)
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-                            @foreach ($services as $service)
+                            @foreach ($makeups as $makeup)
                                 <div class="col mb-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <!-- Service Image -->
+                                            <!-- Makeup Image -->
                                              <div class="larger-image-container">
-                                                <img src="{{ asset('storage/' . $service->image) }}"  class="avatar me-3" alt="Current Image">
+                                                <img src="{{ asset('storage/' . $makeup->image) }}"  class="avatar me-3" alt="Current Image">
                                             </div>
 
-                                            <!-- Service Title -->
-                                            <h5 class="text-black-bold p-2">{{ $service->title }}</h5>
+                                            <!-- Makeup Title -->
+                                            <h5 class="text-black-bold p-2">{{ $makeup->title }}</h5>
 
                                             <div class="card-text">
-                                                <!-- Service Price -->
-                                                <strong>Price:</strong> RM{{ $service->price }}<br><br>
-                                                <!-- Status -->
-                                                <div class="status" style="background-color: {{ $service->status == 1 ? 'green' : 'red' }}">
-                                                    {{ $service->status == 1 ? 'Available' : 'Unavailable' }}
-                                                </div>
+                                                <!-- Makeup Price -->
+                                                <strong>Price:</strong> RM{{ $makeup->price }}<br><br>
+                                                
+                                                <!-- Makeup Description -->
+                                                {!! nl2br(e($makeup->description)) ?? 'N/A' !!}
                                             </div>
 
                                             <div class="text-left mt-2">
                                                 <!-- Edit and Delete Buttons -->
-                                                <form action="{{ route('services.destroy', $service->id) }}" method="POST" class="d-inline">
-                                                    <a class="btn btn-primary btn-sm" href="{{ route('services.edit', $service->id) }}" title="Edit">
+                                                <form action="{{ route('makeups.destroy', $makeup->id) }}" method="POST" class="d-inline">
+                                                    <a class="btn btn-primary btn-sm" href="{{ route('makeups.edit', $makeup->id) }}" title="Edit">
                                                         <i class="fas fa-edit" aria-hidden="true"></i>
                                                     </a>
                                                     @csrf
@@ -68,23 +67,19 @@
     </div>
     
     <style>
-        .larger-image-container {
-            width: 100%;
-            height: 300px; /* Adjust the height as needed */
-            overflow: hidden;
-        }
+.larger-image-container {
+    width: 100%;
+    height: 300px; /* Adjust the height as needed */
+    overflow: hidden;
+}
 
-        .larger-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.larger-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .status {
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            display: inline-block;
-        }
+    
+
     </style>
 @endsection

@@ -22,7 +22,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title bg-primary text-white p-2">{{ $catering->title }}</h5>
                                             <div class="card-text">
-                                                <strong>Price:</strong> RM{{ $catering->price }}<br><br>
+                                                <strong>Price:</strong> RM{{ $catering->price }} / PAX<br><br>
                                                 {!! nl2br(e($catering->description)) ?? 'N/A' !!}
                                             </div>
                                             <div class="text-left mt-2">

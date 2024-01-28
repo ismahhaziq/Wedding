@@ -6,26 +6,33 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Invoice;
 use App\Models\Catering;
+use App\Models\Date;
+use App\Models\User;
 
 class InvoiceController extends Controller
 {
-public function addToInvoice($serviceId) {
-    // Retrieve the service based on the provided $serviceId
-    $service = Service::find($serviceId);
+    public function index()
+    {
+        $user = auth()->user();
+        $user_type = auth()->user()->user_type;
 
-    if (!$service) {
-        // Handle the case where the service is not found, for example, redirecting with an error message
-        return redirect()->route('services.index')->with('error', 'Service not found');
+        $invoices = Invoice::where('user_id', $user->id)->get();
+
+        $eventDate = Date::where('user_id', $user->id)->value('date');
+
+        $users = User::with('invoices')->get();
+
+         // Assuming you want to display the date associated with the first invoice (modify as needed)
+
+        return view($user_type . '.invoices.index', compact('invoices', 'eventDate', 'users'));
     }
 
-    // Create a new invoice or retrieve an existing one (adjust logic as needed)
-    $invoice = Invoice::create();
-
-    // Add the service to the invoice
-    $invoice->services()->attach($service);
-
-    // You may redirect back to the services page or wherever you need
-    return redirect()->route('services.index')->with('success', 'Service added to invoice successfully');
-}
+    public function destroy(Invoice $invoice)
+    {
+        $invoice->delete();
+  
+        return redirect()->route('invoices.index')
+                         ->with('success','Invoice deleted successfully');
+    }
 
 }

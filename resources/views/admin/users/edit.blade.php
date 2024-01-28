@@ -47,16 +47,9 @@
                     <h6>Edit User</h6>
                 </div>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <div id="alert">
+                    @include('components.alert')
+                </div>
 
                 <div class="card-body px-4 pt-4">
                     <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">

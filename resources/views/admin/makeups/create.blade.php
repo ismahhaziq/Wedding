@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Create New Add-On'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Create New Makeup'])
         <style>
         .current-image-container {
             max-width: 300px; /* Set your desired maximum width */
@@ -16,13 +16,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h6>Create New Add-On</h6>
+                    <h6>Create New Makeup</h6>
                 </div>
                 <div id="alert">
                     @include('components.alert')
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('services.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('makeups.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
@@ -32,15 +32,10 @@
                             <label for="price" class="form-label">Price (RM)</label>
                             <input type="number" class="form-control" id="price" name="price" step="0.01" required>
                         </div>
-
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status" name="status" required>
-                                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Available</option>
-                                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Unavailable</option>
-                            </select>
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div>
-
                         <!-- Add file input for image -->
                         <div class="mb-3">
                             <label for="image" class="form-label">Profile Image</label>
@@ -54,8 +49,8 @@
                                 <img id="preview" class="img-fluid border rounded" alt="Image Preview">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Create Add-On</button>
-                        <a class="btn btn-primary" href="{{ route('services.index') }}"> Back</a>
+                        <button type="submit" class="btn btn-primary">Create Makeup</button>
+                        <a class="btn btn-primary" href="{{ route('makeups.index') }}"> Back</a>
                     </form>
                 </div>
             </div>

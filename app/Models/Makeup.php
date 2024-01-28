@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Date extends Model
+class MakeUp extends Model
 {
     use HasFactory;
 
-    public $table = 'dates';
+    public $table = 'makeups';
 
     protected $fillable = [
-        'id', 'date', 'user_id', 'created_at', 'updated_at'
+        'title', 'description', 'price', 'user_id', 'image', 'user_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 }
