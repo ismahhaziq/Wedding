@@ -19,4 +19,9 @@ class Catering extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function date()
+    {
+        return $this->belongsTo(Date::class, 'date_id');
+    }
 }

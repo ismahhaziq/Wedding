@@ -12,8 +12,10 @@ use App\Http\Controllers\InvoiceController;
 
 
 
+
 Route::get('/', function () {
-    return view('welcome');
+    $caterings = \App\Models\Catering::all();
+    return view('welcome', compact('caterings'));
 })->name('welcome');
 
 Auth::routes();
@@ -39,28 +41,26 @@ Route::put('/users/profile/{user}', [App\Http\Controllers\UserController::class,
 
 Route::resource('users', App\Http\Controllers\UserController::class); //ni cara auto, tak perlu nak tulis satu-satu CRUD macam bawah tu. Atas tu contoh sahaja.
 
-Route::resource('/subjects', App\Http\Controllers\SubjectController::class);
-                //^^^^^^^
-                //ikut nama declaration yang dibuat dalam index() kat SubjectController
-Route::resource('/halls', App\Http\Controllers\HallController::class);
-
-Route::resource('/timetables', App\Http\Controllers\StudentTimeTableController::class);
-
-Route::resource('/groups', App\Http\Controllers\LecturerGroupController::class);
-
-Route::resource('/checklists', App\Http\Controllers\ChecklistController::class);
-
-Route::resource('/todos', App\Http\Controllers\TodoController::class);
-
-Route::resource('/guests', App\Http\Controllers\GuestController::class);
-
 Route::resource('/caterings', App\Http\Controllers\CateringController::class);
 
 Route::resource('/dates', App\Http\Controllers\DateController::class);
 
+Route::put('/dates/{date}/updateStatus', [App\Http\Controllers\DateController::class, 'updateStatus'])->name('dates.updateStatus');
+
 Route::resource('/makeups', App\Http\Controllers\MakeUpController::class);
 
 Route::resource('/invoices', App\Http\Controllers\InvoiceController::class);
+
+Route::prefix('paypal')->group(function () {
+    Route::get('handle-payment/{totalAmount}/{invoice_id}', [App\Http\Controllers\InvoiceController::class, 'handlePayment'])
+        ->name('make.payment');
+    Route::get('cancel-payment', [App\Http\Controllers\InvoiceController::class, 'paymentCancel'])
+        ->name('cancel.payment');
+    Route::get('payment-success', [App\Http\Controllers\InvoiceController::class, 'paymentSuccess'])
+        ->name('success.payment');
+});
+
+Route::put('/invoices/{invoice}/update-status', [App\Http\Controllers\InvoiceController::class, 'updateStatus'])->name('invoices.updateStatus');
 
 Route::post('/makeups/{makeup}/addToInvoice', [App\Http\Controllers\MakeupController::class, 'addToInvoice'])->name('makeups.addToInvoice');
 Route::post('/services/{service}/addToInvoice', [App\Http\Controllers\ServiceController::class, 'addToInvoice'])->name('services.addToInvoice');
@@ -68,7 +68,26 @@ Route::post('/caterings/{catering}/addToInvoice', [App\Http\Controllers\Catering
 Route::post('/caterings/confirmInvoice', [App\Http\Controllers\CateringController::class, 'confirmInvoice'])->name('caterings.confirmInvoice');
 Route::get('/caterings/change', [App\Http\Controllers\CateringController::class, 'show'])->name('caterings.show');
 
-Route::put('/todos/{id}', [App\Http\Controllers\TodoController::class, 'update'])->name('todos.update');
-
 Route::resource('/services', App\Http\Controllers\ServiceController::class);
 
+Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleAuthController::class, 'handleGoogleCallback']);
+
+
+// Route to show the forgot password form
+Route::get('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+
+// Route to handle the submission of the forgot password form
+Route::post('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Show reset password form
+Route::get('/reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Handle reset password form submission
+Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::put('/invoices/{id}/revert', [App\Http\Controllers\InvoiceController::class, 'revertStatus'])->name('invoices.revertStatus');
+
+Route::get('/dress', [App\Http\Controllers\MakeupController::class, 'dress'])->name('makeups.dress');
+
+//Route::delete('/deleteAll', [App\Http\Controllers\ServiceController::class, 'deleteAll'])->name('services.deleteAll');

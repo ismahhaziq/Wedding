@@ -3,36 +3,35 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 
 class EventServiceProvider extends ServiceProvider
 {
     /**
-     * The event to listener mappings for the application.
+     * The event listener mappings for the application.
      *
-     * @var array<class-string, array<int, class-string>>
+     * @var array
      */
     protected $listen = [
         Registered::class => [
-            SendEmailVerificationNotification::class,
+            'App\Listeners\SendNewUserNotification',
         ],
     ];
 
     /**
      * Register any events for your application.
+     *
+     * @return void
      */
-    public function boot(): void
+    public function boot()
     {
-        //
-    }
+        parent::boot();
 
-    /**
-     * Determine if events and listeners should be automatically discovered.
-     */
-    public function shouldDiscoverEvents(): bool
-    {
-        return false;
+        // Check if the users table exists before attempting to register the listener
+        if (Schema::hasTable('users')) {
+            // You don't need to manually register the listener here since it's already defined in $listen
+        }
     }
 }

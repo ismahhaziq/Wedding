@@ -7,12 +7,18 @@
     "require": {
         "php": "^8.1",
         "doctrine/dbal": "2.*",
+        "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-frontend-presets/argon": "^2.0",
+        "laravel/cashier": "^15.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.3"
+        "laravel/ui": "^4.3",
+        "razorpay/razorpay": "^2.9",
+        "srmklive/paypal": "~3.0",
+        "stripe/stripe-php": "^13.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

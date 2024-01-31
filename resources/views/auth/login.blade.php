@@ -78,14 +78,17 @@
                                         <div class="mb-3">
                                             <input type="password" class="form-control form-control-lg" name="password" placeholder="Password"
                                                 aria-label="Password">
-                                        </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                                        </div>
+                                                <div class="text-end">
+                                                    <p class="text-right small mb-0"><a href="{{ route('password.request') }}" class="text-primary">Forgot Password?</a></p>
+                                                </div>
+                                        </div>                                     
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign
                                                 in</button>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <a href="{{ route('google.redirect') }}" class="btn bg-gradient-danger w-100 my-4 mb-2">Sign in with Google</a>
                                         </div>
                                     </form>
                                 </div>

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Service;
-use App\Models\Invoice; 
+use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use DB;
 use Hash; 
 
@@ -76,15 +77,31 @@ class ServiceController extends Controller
 
     public function addToInvoice(Service $service)
     {
-    $service = Invoice::create([
-        'title' => $service->title,
-        'price' => $service->price,
-        'user_id' => auth()->user()->id,
-    ]);
+        // Check if an invoice exists for the user
+        $invoice = Invoice::where('user_id', auth()->user()->id)->first();
 
-    return redirect()->route('services.index')
-        ->with('success', 'Add-On added to invoice successfully');
+        // If no invoice exists, create a new one
+        if (!$invoice) {
+            $invoice = Invoice::create([
+                'user_id' => auth()->user()->id,
+                // Check if the user has a date, otherwise set date_id to null
+                'date_id' => auth()->user()->date ? auth()->user()->date->id : null,
+                // Add any additional fields you want to save in Invoice
+            ]);
+        }
+
+        // Create a new InvoiceItem record with service details and link it to the invoice
+        $invoiceItem = InvoiceItem::create([
+            'title' => $service->title,
+            'price' => $service->price,
+            'invoice_id' => $invoice->id,
+            // Add any additional fields you want to save in InvoiceItem
+        ]);
+
+        return redirect()->route('services.index')
+            ->with('success', 'Service added to invoice successfully');
     }
+
 
     public function destroy(Service $service)
     {
@@ -92,7 +109,7 @@ class ServiceController extends Controller
   
         return redirect()->route('services.index')
                          ->with('success','Add-On deleted successfully');
-    } 
-    
+    }
+
     // Add other methods as needed (e.g., show, destroy)
 }

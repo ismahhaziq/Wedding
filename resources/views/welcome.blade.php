@@ -92,5 +92,101 @@
                 </div>
             </div>
         </section>
+
+<!-- New section for About Us -->
+<section>
+    <div class="container mt-5">
+        <div class="row align-items-start">
+            <div class="col-md-12 mb-4">
+                <h2 class="text-left mb-4"><span style="color: #F9623C; font-size:150%">A</span>bout Us</h2>
+                <div class="row align-items-start">
+                    <div class="col-md-6 mb-4">
+                        <p style="font-size: 20px;">At Modernize Enterprise, we are dedicated to making every wedding journey a seamless and unforgettable experience for brides-to-be. With our passion for excellence and commitment to personalized service, we strive to transform dreams into reality, ensuring that each bride feels radiant, confident, and cherished on her special day.</p>
+                    </div>
+                    <div class="col-md-6 mb-4 align-self-start">
+                        <img src="{{ asset('./img/poster.jpg') }}" alt="About Us Image" class="img-fluid" style="max-width: 90%; margin-top: -60px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- New section for displaying services -->
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-4"><span style="color: #F9623C; font-size:150%">S</span>ervices</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="service-item text-center border p-3" style="background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);">
+                    <img src="{{ asset('./img/makeupndress.jpg') }}" alt="Service 1" class="img-fluid"  style="max-width: 100%; max-height: 110%;">
+                    <h4 class="mt-3">Make Up & Dress</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="service-item text-center border p-3" style="background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);">
+                    <img src="{{ asset('./img/catering.jpg') }}" alt="Service 2" class="img-fluid"  style="max-height: 10000px;">
+                    <h4 class="mt-3">Catering</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="service-item text-center border p-3" style="background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);">
+                    <img src="{{ asset('./img/dj.jpg') }}" alt="Service 3" class="img-fluid"  style="max-height: 10000px;">
+                    <h4 class="mt-3">DJ</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="service-item text-center border p-3" style="background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);">
+                    <img src="{{ asset('./img/photographer.jpg') }}" alt="Service 4" class="img-fluid"  style="max-height: 100%;">
+                    <h4 class="mt-3">Photograph</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- New section for displaying catering packages -->
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-4"><span style="color: #F9623C; font-size:150%">C</span>atering Packages</h2>
+            </div>
+        </div>
+        <div class="row">
+            @foreach($caterings as $catering)
+            <div class="col-md-4 mb-4">
+                <div class="service-item text-center border p-3"
+                    style="background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);">
+                    <h4 class="mt-3">{{ $catering->title }}</h4>
+                    <h5>Price: RM{{ $catering->price }} / pax</h5>
+                    <p>{!! nl2br(e($catering->description)) ?? 'N/A'!!}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- New section for Contact Us -->
+<section>
+    <div class="container mt-5">
+        <div class="row align-items-start">
+            <div class="col-md-12 mb-4">
+                <h2 class="text-center mb-4"><span style="color: #F9623C; font-size:150%">C</span>ontact Us</h2>
+                <div class="row align-items-start">
+                    <div class="mb-4">
+                        <p class="text-center" style="font-size: 20px;">You can also email us: <a href="mailto:modernize54@gmail.com" class="text-bold">modernize54@gmail.com</a> or call us at <a href="tel:+01172514020" class="text-bold">011-72514020</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     </main>
 @endsection

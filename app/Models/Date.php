@@ -12,11 +12,16 @@ class Date extends Model
     public $table = 'dates';
 
     protected $fillable = [
-        'id', 'date', 'user_id', 'created_at', 'updated_at'
+        'id', 'date', 'user_id', 'created_at', 'updated_at', 'status'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function invoices()
+    {
+        return $this->belongsToMany(Invoice::class);
     }
 }

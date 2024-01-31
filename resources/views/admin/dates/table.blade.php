@@ -23,6 +23,8 @@
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chosen Date</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>                            
@@ -35,7 +37,6 @@
                                         <tr>
                                             <td class="text-center">{{ $count++ }}</td>
                                             <td>
-                                               
                                                 <div class="d-flex px-3 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">
@@ -43,7 +44,6 @@
                                                         </h6>
                                                     </div>
                                                 </div>
-                                                
                                             </td>
                                             <td>
                                                 <div class="d-flex px-3 py-1">
@@ -58,6 +58,21 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <div class="d-flex px-3 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6
+                                                            class="mb-0 text-sm @if($user->status == 'Pending') badge bg-secondary text-bold @elseif($user->status == 'Confirmed') badge bg-success @elseif($user->status == 'Rejected') badge bg-danger @endif">
+                                                        {{ $user->status ?? 'No status' }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex px-3 py-1">
+                                                    <a href="{{ route('dates.edit', $user->id) }}" class="align-middle btn btn-primary btn-sm">Edit</a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -67,7 +82,7 @@
                         <p class="text-center">No dates added</p>
                     @endif
                 </div>
-            </div>
+
         </div>
     </div>
 

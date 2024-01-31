@@ -12,33 +12,48 @@
                     </div>
                 </div>
 
-<div id="alert">
+                <div id="alert">
                     @include('components.alert')
                 </div>
 
                 @if(auth()->user()->dates->count() > 0)
-                    <ul>
-                        @foreach(auth()->user()->dates as $userDate)
-                            <li>
+                    @foreach(auth()->user()->dates as $userDate)
+                        <div class="row">
+                            <div class="col-md-6">
                                 <form method="post" action="{{ route('dates.update', $userDate->id) }}">
                                     @csrf
                                     @method('PUT')
-                                    <div class="mb-3">
+                                    <div class="mb-3 ">
                                         <label for="date" class="form-label">Chosen Date:</label>
-                                        <input type="text" class="form-control col-sm-3 datepicker" id="datepicker" name="date" min="{{ now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($userDate->date)->format('d-m-Y') }}" autocomplete="off" required @if($userDate->date === now()->format('Y-m-d')) disabled @endif>
-                                    </div>
+                                        <input type="text" class="form-control col-sm-3 datepicker " id="datepicker" name="date" min="{{ now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($userDate->date)->format('d-m-Y') }}" autocomplete="off" required @if($userDate->date === now()->format('Y-m-d')) disabled @endif>
+                                    </div>   
                                     <button type="submit" class="btn btn-sm btn-warning">Update Date</button>
-
-                                    <button type="submit" form="deleteForm_{{ $userDate->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this date?')">Delete Date</button>
-                                </form>
-
-                                <form method="post" action="{{ route('dates.destroy', $userDate->id) }}" id="deleteForm_{{ $userDate->id }}" class="d-none">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            </li>
-                        @endforeach
-                    </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <h6>Status</h6>
+                                    @php
+                                        $statusClass = '';
+                                        switch($userDate->status) {
+                                            case 'Pending':
+                                                $statusClass = 'bg-secondary';
+                                                break;
+                                            case 'Confirmed':
+                                                $statusClass = 'bg-success';
+                                                break;
+                                            case 'Rejected':
+                                                $statusClass = 'bg-danger';
+                                                break;
+                                            default:
+                                                $statusClass = 'bg-primary';
+                                                break;
+                                        }
+                                    @endphp
+                                    <span class="badge {{ $statusClass }}">{{ $userDate->status }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 @endif
 
                 @if(auth()->user()->dates->count() == 0)
@@ -56,26 +71,23 @@
     </div>
 
     <!-- Add these lines to your HTML file -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var disabledDates = {!! json_encode($disabledDates) !!};
+            var today = moment().format('YYYY-MM-DD');
 
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var disabledDates = {!! json_encode($disabledDates) !!};
-        var today = moment().format('YYYY-MM-DD');
-
-        var picker = new Pikaday({
-            field: document.getElementById('datepicker'),
-            format: 'DD-MM-YYYY',
-            disableDayFn: function (date) {
-                return disabledDates.indexOf(moment(date).format('DD-MM-YYYY')) !== -1;
-            },
-            minDate: new Date(today),
+            var picker = new Pikaday({
+                field: document.getElementById('datepicker'),
+                format: 'DD-MM-YYYY',
+                disableDayFn: function (date) {
+                    return disabledDates.indexOf(moment(date).format('DD-MM-YYYY')) !== -1;
+                },
+                minDate: new Date(today),
+            });
         });
-    });
-
-</script>
-    
+    </script>
 @endsection

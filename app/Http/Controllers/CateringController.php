@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Catering;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\Date;
 use DB;
 use Hash; 
@@ -22,6 +23,14 @@ class CateringController extends Controller
 
         return view($user_type .'.caterings.index', compact('caterings', 'totalGuests', 'totalAmount'));
     }
+
+    public function welcome()
+    {
+        $caterings = Catering::all();
+
+        return view('welcome', compact('caterings'));
+    }
+
 
     public function create()
     {
@@ -59,42 +68,78 @@ class CateringController extends Controller
         return redirect()->route('caterings.index')->with('success', 'Catering updated successfully.');
     }
 
-public function confirmInvoice(Request $request)
-{
-    $totalGuests = $request->input('total_guests');
-    $totalAmount = $request->input('total_amount');
-    $selectedPackageId = $request->input('selected_package');
-    $selectedPackageName = Catering::find($selectedPackageId)->title;
+    public function confirmInvoice(Request $request)
+    {
+        $totalGuests = $request->input('total_guests');
+        $totalAmount = $request->input('total_amount');
+        $selectedPackageId = $request->input('selected_package');
+        $selectedPackageName = Catering::find($selectedPackageId)->title;
 
-    // Check if there's an existing invoice for the user
-    $existingInvoice = Invoice::where('user_id', auth()->user()->id)->first();
+        // Find existing invoice for the user
+        $existingInvoice = Invoice::where('user_id', auth()->user()->id)->first();
 
-    if ($existingInvoice) {
-        // Update the existing invoice
-        $existingInvoice->update([
-            'total_guests' => $totalGuests,
-            'total_amount' => $totalAmount,
-            'selected_package_id' => $selectedPackageId,
-            'title' => $selectedPackageName,
-        ]);
+        if ($existingInvoice) {
 
-        $confirmationMessage = "Invoice updated: Total Guests: $totalGuests, Total Amount: $totalAmount, Selected Package ID: $selectedPackageId, Selected Package Name: $selectedPackageName";
-    } else {
-        // Create a new invoice
-        Invoice::create([
-            'user_id' => auth()->user()->id,
-            'total_guests' => $totalGuests,
-            'total_amount' => $totalAmount,
-            'selected_package_id' => $selectedPackageId,
-            'title' => $selectedPackageName,
-            
-        ]);
+            // Find the existing InvoiceItem associated with the selected package
+            $existingInvoiceItem = $existingInvoice->items()->where('selected_package_id', $selectedPackageId)->first();
 
-        $confirmationMessage = "Invoice created: Total Guests: $totalGuests, Total Amount: $totalAmount, Selected Package ID: $selectedPackageId, Selected Package Name: $selectedPackageName";
+            if ($existingInvoiceItem) {
+                // Update the existing InvoiceItem for the selected package
+                $existingInvoiceItem->update([
+                    'total_guests' => $totalGuests,
+                    'total_amount' => $totalAmount,
+                    'title' => $selectedPackageName,
+                ]);
+
+                $confirmationMessage = "Invoice item updated: Total Guests: $totalGuests, Total Amount: $totalAmount, Selected Package ID: $selectedPackageId, Selected Package Name: $selectedPackageName";
+            } else {
+                // Check if there is an existing InvoiceItem for a different selected package
+                $existingInvoiceItemDifferentPackage = $existingInvoice->items()->where('selected_package_id', '<>', $selectedPackageId)->first();
+
+                if ($existingInvoiceItemDifferentPackage) {
+                    // Update the existing InvoiceItem associated with a different package
+                    $existingInvoiceItemDifferentPackage->update([
+                        'total_guests' => $totalGuests,
+                        'total_amount' => $totalAmount,
+                        'selected_package_id' => $selectedPackageId, // Update the selected_package_id
+                        'title' => $selectedPackageName,
+                    ]);
+
+                    $confirmationMessage = "Invoice item updated with a different package: Total Guests: $totalGuests, Total Amount: $totalAmount, Selected Package ID: $selectedPackageId, Selected Package Name: $selectedPackageName";
+                } else {
+                    // Create a new InvoiceItem for the selected package
+                    $existingInvoice->items()->create([
+                        'total_guests' => $totalGuests,
+                        'total_amount' => $totalAmount,
+                        'selected_package_id' => $selectedPackageId,
+                        'title' => $selectedPackageName,
+                    ]);
+
+                    $confirmationMessage = "New invoice item created: Total Guests: $totalGuests, Total Amount: $totalAmount, Selected Package ID: $selectedPackageId, Selected Package Name: $selectedPackageName";
+                }
+            }
+        } else {
+            // Create new invoice
+            $newInvoice = Invoice::create([
+                'user_id' => auth()->user()->id,
+                // Check if the user has a date, otherwise set date_id to null
+                'date_id' => auth()->user()->date ? auth()->user()->date->id : null,
+            ]);
+
+            // Create a new InvoiceItem for the selected package
+            $newInvoice->items()->create([
+                'total_guests' => $totalGuests,
+                'total_amount' => $totalAmount,
+                'selected_package_id' => $selectedPackageId,
+                'title' => $selectedPackageName,
+            ]);
+
+            $confirmationMessage = "New invoice item created: Total Guests: $totalGuests, Total Amount: $totalAmount, Selected Package ID: $selectedPackageId, Selected Package Name: $selectedPackageName";
+        }
+
+        return response()->json(['message' => $confirmationMessage]);
     }
 
-    return response()->json(['message' => $confirmationMessage]);
-}
 
 
     public function destroy(Catering $catering)

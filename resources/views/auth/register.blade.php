@@ -1,6 +1,7 @@
 @extends('layouts.apps')
 
 @section('content')
+<script src="https://apis.google.com/js/platform.js" async defer></script>
     @include('layouts.navbars.guest.navbar')
     <main class="main-content mt-0">
         <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
@@ -62,6 +63,11 @@
                                 <div class="text-center">
                                     <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
                                 </div>
+
+                                <div class="text-center">
+                                    <a href="{{ route('google.redirect') }}" class="btn bg-gradient-danger w-100 my-4 mb-2">Sign Up with Google</a>
+                                </div>
+
                                 <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{ route('login') }}"
                                         class="text-dark font-weight-bolder">Sign in</a></p>
                                 </form>

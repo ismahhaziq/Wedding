@@ -17,7 +17,7 @@
                 <div class="row md-3 mx-1">
                     <div class="col-md-3">
                         <label for="total_guests" class="form-label">Total Guests:</label>
-                        <input type="number" class="form-control" id="total_guests" name="total_guests" placeholder="Enter total guests" value="{{ $totalGuests ?? '' }}">
+                        <input type="number" class="form-control hidden_total_guests" id="total_guests" name="total_guests" placeholder="Enter total guests" value="{{ $totalGuests ?? '' }}">
                     </div>
                     <div class="col-md-3">
                         <label for="selected_package" class="form-label">Selected Package:</label>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="total_amount" class="form-label">Total Amount:</label>
-                        <input type="number" class="form-control" id="total_amount" name="total_amount" placeholder="Total Amount" value="{{ $totalAmount ?? '' }}" disabled>
+                        <input type="number" class="form-control hidden_total_amount" id="total_amount" name="total_amount" placeholder="Total Amount" value="{{ $totalAmount ?? '' }}" disabled>
                     </div>
                     <div class="col-md-3">
                         <!-- Confirm Button -->
@@ -88,8 +88,8 @@ document.getElementById('selected_package').addEventListener('change', function(
             totalAmountInput.value = totalAmount.toFixed(2);
 
             // Set initial values for hidden inputs
-            document.getElementById('hidden_total_guests').value = totalGuests;
-            document.getElementById('hidden_total_amount').value = totalAmount.toFixed(2);
+            document.querySelector('.hidden_total_guests').value = totalGuests;
+            document.querySelector('.hidden_total_amount').value = totalAmount.toFixed(2);
         }
 
 function confirmTotal() {
@@ -120,7 +120,7 @@ function confirmTotal() {
             alert(data.message); // Display the response message
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error:', error.message);
         });
     }
 }

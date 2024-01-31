@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-<main class="main-content mt-0">
+<main class="main-content  mt-0">
     <section>
         <div class="page-header min-vh-100">
             <div class="container">
@@ -17,33 +17,23 @@
                         <div class="card card-plain">
                             <div class="card-header pb-0 text-start">
                                 <h4 class="font-weight-bolder">Reset your password</h4>
-                                <p class="mb-0">Enter your new password</p>
+                                <p class="mb-0">Enter your email and please wait a few seconds</p>
                             </div>
                             <div class="card-body">
-                                <form role="form" method="POST" action="{{ route('password.update') }}">
+                                <form role="form" method="POST" action="{{ route('password.email') }}">
                                     @csrf
-                                    <input type="hidden" name="token" value="{{ $token }}">
+                                    @method('post')
                                     <div class="flex flex-col mb-3">
                                         <input type="email" name="email" class="form-control form-control-lg"
-                                            placeholder="Email" value="{{ $email ?? old('email') }}" aria-label="Email"
-                                            required>
+                                            placeholder="Email" value="{{ old('email') }}" aria-label="Email">
                                         @error('email') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                                     </div>
-                                    <div class="flex flex-col mb-3">
-                                        <input type="password" name="password" class="form-control form-control-lg"
-                                            placeholder="New Password" aria-label="Password" required>
-                                        @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>
-                                        @enderror
-                                    </div>
-                                    <div class="flex flex-col mb-3">
-                                        <input type="password" name="password_confirmation"
-                                            class="form-control form-control-lg" placeholder="Confirm Password"
-                                            aria-label="Confirm Password" required>
-                                    </div>
                                     <div class="text-center">
-                                        <button type="submit"
-                                            class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Reset
-                                            Password</button>
+                                        <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Send
+                                            Reset Link</button>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a href="{{ route('login') }}" class="btn btn-link">Back</a>
                                     </div>
                                 </form>
                             </div>
@@ -61,6 +51,7 @@
                             <h4 class="mt-5 text-white font-weight-bolder position-relative">"Timeless Beauty, Modern
                                 Elegance"</h4>
                             <p class="text-white position-relative">The more enchanting the celebration appears, the more meticulous the planning behind the scenes</p>
+                            </p>
                         </div>
                     </div>
                 </div>

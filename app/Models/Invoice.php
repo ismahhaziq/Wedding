@@ -12,7 +12,7 @@ class Invoice extends Model
         public $table = 'invoices';
 
         protected $fillable = [
-        'id', 'title', 'price', 'user_id', 'total_guests', 'total_amount', 'selected_package_id', 'created_at', 'updated_at'
+        'id', 'user_id', 'created_at', 'updated_at', 'status', 'date_id'
     ];
 
     public function user()
@@ -30,6 +30,11 @@ class Invoice extends Model
 
         public function date()
     {
-        return $this->belongsTo(Date::class, 'date_id');
+        return $this->belongsToMany(Date::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(InvoiceItem::class);
     }
 }
