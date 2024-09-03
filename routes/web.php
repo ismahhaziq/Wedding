@@ -47,7 +47,7 @@ Route::resource('/dates', App\Http\Controllers\DateController::class);
 
 Route::put('/dates/{date}/updateStatus', [App\Http\Controllers\DateController::class, 'updateStatus'])->name('dates.updateStatus');
 
-Route::resource('/makeups', App\Http\Controllers\MakeUpController::class);
+Route::resource('/makeups', App\Http\Controllers\MakeupController::class);
 
 Route::resource('/invoices', App\Http\Controllers\InvoiceController::class);
 

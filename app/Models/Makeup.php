@@ -12,12 +12,6 @@ class MakeUp extends Model
     public $table = 'makeups';
 
     protected $fillable = [
-        'title', 'description', 'price', 'user_id', 'image', 'user_id'
+        'title', 'description', 'price', 'image'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
 }

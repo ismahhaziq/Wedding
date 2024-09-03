@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Checklist;
 use App\Models\Date;
 use App\Models\Makeup;
 use App\Models\Catering;
@@ -35,7 +34,6 @@ class DashboardController extends Controller
         $totalUsers = User::count();
 
         // Modify the queries to fetch data only for the authenticated user
-        $totalChecks = Checklist::where('user_id', $user->id)->count();
         $totalDate = Date::count();
         $totalMakeup = Makeup::count();
         $totalCatering = Catering::count();
@@ -43,6 +41,6 @@ class DashboardController extends Controller
         $totalAvailable = Service::where('status', 1)->count();
         $totalUnavailable = Service::where('status', 0)->count();
 
-        return view($user_type . '.dashboards.index', compact('totalUsers', 'totalChecks', 'totalDate', 'totalMakeup', 'totalCatering', 'totalService', 'totalAvailable', 'totalUnavailable'));
+        return view($user_type . '.dashboards.index', compact('totalUsers', 'totalDate', 'totalMakeup', 'totalCatering', 'totalService', 'totalAvailable', 'totalUnavailable'));
     }
 }
