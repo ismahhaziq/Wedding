@@ -25,9 +25,9 @@
                                 <div class="larger-image-container">
                                     <img src="{{ asset('storage/' . $service->image) }}" class="avatar me-3"
                                         alt="Current Image">
-                                </div>
+                                </div>0
 
-                                <!-- Service Title -->
+ 0                               <!-- Service Title -->
                                 <h5 class="text-black-bold p-2">{{ $service->title }}</h5>
 
                                 <div class="card-text">
